@@ -1,0 +1,29 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load my_tags %}
+{% include 'distribution/includes/distribution_info.html' %}
+<div class="col-12 mb-5">
+    <a class="btn btn-success" href="{% url 'blog:create' %}">Добавить блог</a>
+</div>
+<div class="row">
+    {% for object in object_list %}
+    <div class="col-md-4">
+        <h2>{{object.title}}</h2>
+        <h5 class="text text-primary">{{object.slug}}</h5>
+
+        <p>{{object.description}}</p>
+        <div class="btn-group mb-5">
+            <a href="{% url 'blog:view' object.pk %}" class="btn btn-outline-white active"
+               aria-current="page">Просмотр</a>
+            {% if perms.blog.change_blog %}
+            <a href="{% url 'blog:edit' object.pk %}" class="btn btn-outline-success">Обновить</a>
+            {% endif %}
+            {% if perms.blog.delete_blog %}
+            <a href="{% url 'blog:delete' object.pk %}" class="btn btn-danger">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

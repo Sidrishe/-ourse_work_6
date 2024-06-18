@@ -1,0 +1,18 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load my_tags %}
+<div class="row">
+    <div class="col-md-4">
+        <h2>Название: {{object.title}}</h2>
+
+        <p>Slug: {{object.slug}}</p>
+        <p>Контент: {{object.content}}</p>
+        <p>Признак публикации: {{object.publication_feature}}</p>
+        <p>Просмотры: {{ object.views_count }}</p>
+        <a href="{% url 'blog:edit' object.pk %}" class="btn btn-success">Обновить</a>
+        <a href="{% url 'blog:list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</div>
+{% endblock %}
