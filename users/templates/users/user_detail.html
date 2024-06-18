@@ -1,0 +1,18 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load my_tags %}
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ users.avatar|my_media }}" class="w-100" alt="{{user.first_name}} {{object.last_name}}" height="300">
+        <h5 class="mt-0 text-white">Имя пользователя: {{object.first_name}} {{object.last_name}}</h5>
+        <h5 class="mt-0 text-warning">Email: {{object.email}}</h5>
+        <h5 class="mt-0 text-primary mb-4">Описание: {{users.comment}}</h5>
+        {% if perms.users.change_users %}
+        <a href="{% url 'user:profile'%}" class="btn btn-outline-success">Обновить информацию</a>
+        {% endif %}
+        <a href="{% url 'user:user_list' %}" class="btn btn-dark">Назад</a>
+    </div>
+</div>
+{% endblock %}

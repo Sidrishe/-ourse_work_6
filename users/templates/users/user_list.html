@@ -1,0 +1,34 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load my_tags %}
+<div class="my-3 p-3  rounded shadow-sm" xmlns="http://www.w3.org/1999/html">
+    <h6 class="border-bottom pb-2 mb-3 text-warning">Пользователи</h6>
+    {% if user.is_superuser %}
+    <a href="{% url 'users:register' %}" class="btn btn-outline-warning mb-3">Добавить пользователя</a>
+    {% endif %}
+</div>
+<div class="col-6 ">
+    <div class="row-auto">
+        {% for object in object_list %}
+
+        <div class="row g-0  position-relative">
+
+            <div class="col-md-6 p-4 ps-md-0">
+                <h5 class="mt-0 text-white">Имя пользователя: {{object.first_name}} {{object.last_name}}</h5>
+                <h5 class="mt-0 text-warning">Email: {{object.email}}</h5>
+                <h5 class="mt-0 text-primary mb-4">Описание: {{object.comment}}</h5>
+                <div class="btn-group-small mb-5">
+                    {% if perms.users.change_users %}
+                    <a href="{% url 'users:user_detail' object.pk %}" class="btn btn-outline-secondary active"
+                       aria-current="page">Профиль</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
