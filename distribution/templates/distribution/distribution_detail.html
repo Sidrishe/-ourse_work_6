@@ -1,0 +1,21 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load distribution_tags %}
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ distribution.avatar|distribution_media }}" class="w-100" alt="" height="300">
+        <h5 class="mt-0 text-white">Время начала рассылки: {{object.start_time}}</h5>
+        <h5 class="mt-0 text-white">Время окончания рассылки: {{object.end_time}}</h5>
+        <h5 class="d-block text-warning">Переодичность отправки сообщения: {{object.frequency}}</h5>
+        <h5 class="mt-0 text-success">Статус: {{object.status}}</h5>
+        <h5 class="mt-0 text-white mb-3">Сообщение: {{object.message}}</h5>
+        {% if perms.distribution.change_distribution %}
+        <a href="{% url 'distribution:update_distribution' object.pk %}" class="btn btn-outline-success">Обновить
+            информацию</a>
+        {% endif %}
+        <a href="{% url 'distribution:distribution_list' %}" class="btn btn-dark">Назад</a>
+    </div>
+</div>
+{% endblock %}

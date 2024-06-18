@@ -1,0 +1,49 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load my_tags %}
+{% include 'distribution/includes/distribution_info.html' %}
+<div class="my-3 p-3  rounded shadow-sm" xmlns="http://www.w3.org/1999/html">
+    <h6 class="border-bottom pb-2 mb-3 text-danger">Рассылки</h6>
+    {% if perms.distribution.add_distribution %}
+    <a href="{% url 'distribution:create_distribution' %}" class="btn btn-outline-warning mb-3">Добавить рассылку</a>
+    {% endif %}
+    {% if perms.distribution.add_message %}
+    <a href="{% url 'distribution:create_message' %}" class="btn btn-outline-success mb-3">Создать
+        сообщение</a>
+    {% endif %}
+</div>
+<div class="col-6 ">
+    <div class="row-auto">
+        {% for object in object_list %}
+        <div class="row g-0  position-relative">
+
+            <div class="col-md-6 p-4 ps-md-0">
+                <h5 class="mt-0 text-secondary">Рассылка №{{object.id}}</h5>
+                <h5 class="mt-0 text-white">Время начала рассылки: {{object.start_time}}</h5>
+                <h5 class="mt-0 text-white">Время окончания рассылки: {{object.end_time}}</h5>
+                <h5 class="d-block text-warning">Переодичность отправки сообщения: {{object.frequency}}</h5>
+                <!--                <h5 class="d-block text-danger">Клиенты рассылки: {{object.distribution_client}}</h5>-->
+                <h5 class="mt-0 text-success">Статус: {{object.status}}</h5>
+                <h5 class="mt-0 text-white">Сообщение: {{object.message}}</h5>
+                <div class="btn-group-small mb-5">
+                    {% if perms.distribution.view_distribution %}
+                    <a href="{% url 'distribution:distribution_detail' object.pk %}"
+                       class="btn btn-outline-primary"
+                       aria-current="page">Информация</a>
+                    {% endif %}
+                    {% if perms.distribution.change_distribution %}
+                    <a href="{% url 'distribution:update_distribution' object.pk %}" class="btn btn-outline-success">Обновить</a>
+                    {% endif %}
+                    {% if perms.distribution.delete_distribution %}
+                    <a href="{% url 'distribution:distribution_confirm_delete' object.pk %}"
+                       class="btn btn-outline-danger">Удалить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

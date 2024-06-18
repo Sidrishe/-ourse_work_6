@@ -1,0 +1,34 @@
+{% extends 'distribution/base.html' %}
+
+{% block content %}
+{% load static %}
+{% load my_tags %}
+<div class="my-3 p-3  rounded shadow-sm" xmlns="http://www.w3.org/1999/html">
+    <h6 class="border-bottom pb-2 mb-3 text-warning">Клиенты рассылки</h6>
+    {% if perms.distribution.add_distribution_client %}
+    <a href="{% url 'distribution:create_distribution_client' %}" class="btn btn-outline-warning mb-3">Добавить
+        клиента</a>
+    {% endif %}
+</div>
+<div class="col-6 ">
+    <div class="row-auto">
+        {% for client in client_list %}
+
+
+        <h5 class="mt-0 text-white">{{client.first_name}} {{client.last_name}}</h5>
+        <strong class="d-block text-warning">{{client.email}}</strong>
+        <h5 class="mt-0 text-white">{{client.comment}}</h5>
+        <div class="btn-group-small mb-5">
+            {% if perms.distribution.change_distribution_client %}
+            <a href="{% url 'distribution:update_distribution_client' client.pk %}" class="btn btn-outline-success">Обновить</a>
+            {% endif %}
+            {% if perms.distribution.delete_distribution_client %}
+            <a href="{% url 'distribution:delete_distribution_client' client.pk %}" class="btn btn-outline-danger">Удалить</a>
+            {% endif %}
+        </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
